@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 
 # Django models will be developed in this file
@@ -11,6 +12,9 @@ class Question(models.Model):
     description = models.CharField(max_length=200)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     create_time = models.DateTimeField(auto_now_add=True, null=True)
+
+    def get_absolute_url(self):
+        return reverse('question-detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.header
