@@ -14,7 +14,7 @@ class Question(models.Model):
     create_time = models.DateTimeField(auto_now_add=True, null=True)
 
     def get_absolute_url(self):
-        return reverse('question-detail', kwargs={'pk': self.pk})
+        return reverse('question-add', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.header
@@ -25,6 +25,9 @@ class Comment(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     create_time = models.DateTimeField(auto_now_add=True, null=True)
+
+    def get_absolute_url(self):
+        return reverse('comment-detail', kwargs={'pk': self.pk})
 
     def __str__(self):
         return self.comment_text
