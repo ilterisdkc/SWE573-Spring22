@@ -50,7 +50,7 @@ class QuestionUpdateView(UpdateView):
 
 class CommentCreateView(CreateView):
     model = Comment
-    fields = ['comment_text']
+    fields = ['question', 'comment_text']
     template_name = 'myapp/templates/comment_add.html'
     success_url = '/comment/add'
 

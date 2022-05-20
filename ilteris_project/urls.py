@@ -14,14 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from myapp.views import QuestionCreateView, CommentCreateView, QuestionUpdateView, CommentUpdateView, QuestionDataTable
+from UserManagement import views as umv
 
 urlpatterns = [
+    path('', umv.home, name="landing"),
     path('admin/', admin.site.urls),
     path('question/add/', QuestionCreateView.as_view(), name='question-add'),
     path('question/<int:pk>', QuestionUpdateView.as_view(), name='question-update'),
     path('comment/add', CommentCreateView.as_view(), name='comment-add'),
     path('comment/<int:pk>', CommentUpdateView.as_view(), name='comment-update'),
     path('questions', QuestionDataTable.as_view(), name='question-list'),
+    path('user/', include("UserManagement.urls")),
+
 ]
