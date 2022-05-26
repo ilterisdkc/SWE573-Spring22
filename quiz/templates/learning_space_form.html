@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %} Add New coLearn Space {% endblock %}
+
+{% block body %}
+{##}
+{#    {% load crispy_forms_filters %}#}
+{##}
+{#    {% load crispy_forms_tags %}#}
+
+    <form method="post" style=" width: 50vw; margin-left : 25vw; margin-top: 3vw; ">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" class="btn btn-success" value="Save">
+    </form>
+
+{% endblock %}
