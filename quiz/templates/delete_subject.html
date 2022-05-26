@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %} Delete Subject {% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h4>Are you sure you want to delete {{subject.title}}</h4>
+    <br>
+    <form action="/delete_subject/{{subject.id}}/" method="POST">
+            
+        {% csrf_token %}
+        <a class="btn btn-warning" href="/subject_list/">Cancel</a>
+    
+        <input class="btn btn-danger" type="submit" value="Delete">
+    </form>
+</div>
+
+{% endblock %}
