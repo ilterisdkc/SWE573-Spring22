@@ -1,6 +1,25 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+    <h2 style="justify-self: center" >coLearn Spaces</h2>
+
 {% if learning_spaces %} {% for ls in learning_spaces %}
 
 <style>
+
+a {
+    justify-content: center;
+    margin-bottom: 5px;
+    margin-top: 10px;
+    margin-left: 50px
+}
+
+h2 {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 
   .card {
     background: black;
@@ -10,25 +29,58 @@
     margin-bottom: 3rem;
   }
 
+  #btn {
+    border: 5px solid;
+    border-image-slice: 1;
+    background: var(--gradient) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    border-image-source: var(--gradient) !important;
+    text-decoration: none;
+    position: relative;
+    left: 80px;
+  }
+
+  #btn:hover,
+  #btn:focus {
+    background: var(--gradient) !important;
+    -webkit-background-clip: none !important;
+    -webkit-text-fill-color: #fff !important;
+    border: 5px solid #fff !important;
+    box-shadow: #222 1px 0 10px;
+    text-decoration: underline;
+  }
+
 </style>
 
-<div class="col-md-4">
+<div class="col-md-11" style="margin-left: 40px">
+
 	<div class="card mb-4 box-shadow">
 
         <div class="card" >
 			<h5 class="card-title" style="text-align: center;">{{ls.title}}</h5>
 			<div class="scrollable">
-				<p class="card-text">{{ls.description}}</p>
+				<p class="card-text" style="margin-left: 10px">{{ls.description}}</p>
 			</div>
 			<div class="d-flex justify-content-between align-items-center">
+                {% if user_authenticated %}
 				<div class="btn-group">
 					<a
 						class="btn btn-sm btn-outline-secondary"
 						href="/learning_space/{{ls.id}}"
-                        style="justify-content: center"
-						>View</a
+						>coLearn</a
 					>
 				</div>
+                {% else %}
+                <div class="btn-group">
+					<a
+						class="btn btn-sm btn-outline-secondary"
+						href="/login"
+						>Login to View</a
+					>
+				</div>
+                {% endif %}
+
 			</div>
 		</div>
 
@@ -42,3 +94,4 @@
 		max-height: 150px;
 	}
 </style>
+{% endblock %}
