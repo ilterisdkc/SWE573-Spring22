@@ -140,8 +140,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/login'
 
-from django.urls import reverse_lazy
-LOGIN_REDIRECT_URL = reverse_lazy('student_course_list')
-
 MEDIA_ROOT = os.path.join(BASE_DIR, 'quiz/media')
 MEDIA_URL = 'quiz/media/'
