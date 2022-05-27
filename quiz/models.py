@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-import random
 from PIL import Image
 from ckeditor.fields import RichTextField
 
@@ -95,7 +94,7 @@ class LearningSpace(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=200)
     create_time = models.DateTimeField(auto_now_add=True)
-    coLearners = models.ManyToManyField(Contributor, blank=True)
+    coLearners = models.ManyToManyField(Profile, blank=True)
     quizzes = models.ManyToManyField(Quiz, blank=True)
     subjects = models.ManyToManyField(Subject, blank=True)
 
