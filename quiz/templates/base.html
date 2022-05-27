@@ -2,27 +2,66 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{#    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">#}
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <title>{% block title %} {% endblock %}</title>
     {% block css %} 
     <style>
-      .head1 {
-    color: white;
-    font-size: 2rem;
-    font-weight: bold;
-    height: 50px;
-  }
 
-  .head2 {
-    color: aqua;
-    font-size: 2rem;
-    font-weight: bold;
-  }
+        .card {
+            background: black;
+            border: 1px solid aqua;
+            {#color: rgba(250, 250, 250, 0.8);#}
+              color: aqua;
+            margin-bottom: 3rem;
+          }
+
+        .timer{
+            float: right;
+        }
+        .total{
+            margin-bottom: 5px;
+        }
+        input[type='radio']:checked:after {
+            width: 15px;
+            height: 15px;
+            border-radius: 15px;
+            top: -2px;
+            left: -1px;
+            position: relative;
+            background-color: #16b138;
+            content: '';
+            display: inline-block;
+            visibility: visible;
+            border: 2px solid white;
+        }
+
+        .logo {
+            position: relative;
+            bottom: 2rem;
+        }
+
+        .container-fluid {
+            height: 60px;
+        }
+
+          .head1 {
+        color: white;
+        font-size: 2rem;
+        font-weight: bold;
+        height: 50px;
+      }
+
+      .head2 {
+        color: aqua;
+        font-size: 2rem;
+        font-weight: bold;
+      }
     </style>
-    {% endblock %}
+{% endblock %}
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -33,13 +72,34 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
               {% if user.is_authenticated %}
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link" href="/profile">Welcome {{request.user}}</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
-                  </li>
+
+                  <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                    <ul class="navbar-nav">
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Welcome {{request.user}}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                          <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                          <li><a class="dropdown-item" style="color: red" href="/logout">Logout</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                    <ul class="navbar-nav">
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          coLearn Spaces
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                          <li><a class="dropdown-item" href="/learning_space_create/">Create Learning Space</a></li>
+                          <li><a class="dropdown-item" href="/learning_space_list/">Join Learning Spaces</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </div>
 
                   <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
                     <ul class="navbar-nav">
@@ -48,6 +108,7 @@
                           Quiz Room
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                          <li><a class="dropdown-item" href="/quizzes">Solve Quizzes</a></li>
                           <li><a class="dropdown-item" href="/add_quiz/">Add Quiz</a></li>
                           <li><a class="dropdown-item" href="/add_question/">Add Questions</a></li>
                           <li><a class="dropdown-item" href="/results/">Results of the Users</a></li>
@@ -70,6 +131,17 @@
                 </ul>
                 </div>
 
+              <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+                <ul class="navbar-nav">
+                  <li class="nav-item dropdown">
+                    <form action="{% url 'search_learning_spaces' %}" method="GET" value="{{request.GET.q}}">
+                        Search <input type="text" name="q" value="{{request.GET.q}}" placeholder="Search coLearn Spaces"/>
+                        <input type="submit" name="submit" value="Search"/>
+                    </form>
+                  </li>
+                </ul>
+                </div>
+
               </ul>
               {% else %}
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -87,6 +159,8 @@
       {% block body %} {% endblock %}
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+
   </body>
       {% block js %}{% endblock %}
 </html>
