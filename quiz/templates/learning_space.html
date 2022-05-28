@@ -3,78 +3,99 @@
 {%  block body %}
 
 <div class="album py-5 bg-light">
-    <div class="container">
-
-    {% if user_coLearn %}
-        <div>
-            <form
-                    id="user_coLearn"
-                    method="POST"
-                    action="{{ learning_space.id }}"
-{#                    enctype="multipart/form-data"#}
-            >
-                {% csrf_token %}
-                <button
-                    form="user_coLearn"
-                    type="submit"
-                    class="btn btn-md ml-auto btn-success"
-                >Stop coLearn {{ learning_space.title }}</button>
-            </form>
-        </div>
-    {% else %}
-        <div>
-            <form
-                    id="user_coLearn"
-                    method="POST"
-                    action="{{ learning_space.id }}"
-{#                    enctype="multipart/form-data"#}
-            >
-                {% csrf_token %}
-                <button
-                    form="user_coLearn"
-                    type="submit"
-                    class="btn btn-md ml-auto btn-outline-success"
-                >coLearn {{ learning_space.title }}</button>
-            </form>
-        </div>
-    {% endif %}
-
+<div class="container">
 
     <div style="width: 100%;">
-        <div style="width: 50%; height: 100px; float: left;">
+        <div style="width: 40%; height: 100px; float: left;">
             <div class="row">
                 <h2>Subjects in {{ learning_space.title }}</h2>
+                {% if user_authenticated %}
+                    <div class="py-3 text-center">
+                        <a class="btn btn-sm btn-outline-primary" href="/subject_create">Create New Subject</a>
+                    </div>
+                {% endif %}
                 <!-- Subject Modal-->
                 {%include 'subject_modal.html'%}
                 <!-- Subject Modal-->
             </div>
 
-            {% if user_authenticated %}
-                <div class="py-3 text-center">
-                    <a class="btn btn-sm btn-outline-primary" href="/subject_create">Create New Subject</a>
-                </div>
-            {% endif %}
-
         </div>
 
-        <div style="margin-left: 50%; height: 100px;">
+        <div style="margin-left: 40%; height: 100px;">
             <div class="row">
                 <h2>Quizzes in {{ learning_space.title }}</h2>
-                <!-- Subject Modal-->
+                {% if user_authenticated %}
+                    <div class="py-3 text-center">
+                        <a class="btn btn-sm btn-outline-primary" href="/add_quiz/">Add Quiz</a>
+                    </div>
+                {% endif %}
+                <!-- Quiz Modal-->
                 {%include 'quiz_modal.html'%}
-                <!-- Subject Modal-->
+                <!-- Quiz Modal-->
             </div>
 
-            {% if user_authenticated %}
-                <div class="py-3 text-center">
-                    <a class="btn btn-sm btn-outline-primary" href="/subject_create">Create New Quiz</a>
-                </div>
-            {% endif %}
+        </div>
 
+        <div style="margin-left: 80%; height: 100px;">
+            <div class="row">
+                <h3>coLearners in {{ learning_space.title }}</h3>
+                <!-- coLearners Modal-->
+                {% if coLearners %} {% for c in coLearners %}
+                    <ul>
+                    <li>
+                        {{ c.user.username }} - Last Login: {{ c.user.last_login }}
+                    </li>
+                    </ul>
+
+                {% endfor %}
+                {% else %}
+                    <ul>
+                    <li>
+                        No coLearners yet. Be first?
+                    </li>
+                    </ul>
+                {% endif %}
+                <!-- coLearners Modal-->
+            </div>
+
+    {% if user_coLearn %}
+            <div>
+                <form
+                        id="user_coLearn"
+                        method="POST"
+                        action="{{ learning_space.id }}"
+                        enctype="multipart/form-data"
+                >
+                    {% csrf_token %}
+                    <button
+                        form="user_coLearn"
+                        type="submit"
+                        class="btn btn-md ml-auto btn-success"
+                    >Stop coLearn {{ learning_space.title }}</button>
+                </form>
+            </div>
+        {% else %}
+            <div>
+                <form
+                        id="user_coLearn"
+                        method="POST"
+                        action="{{ learning_space.id }}"
+                        enctype="multipart/form-data"
+                >
+                    {% csrf_token %}
+                    <button
+                        form="user_coLearn"
+                        type="submit"
+                        class="btn btn-md ml-auto btn-outline-success"
+                    >coLearn {{ learning_space.title }}</button>
+                </form>
+            </div>
+        {% endif %}
+
+            </div>
+        </div>
         </div>
     </div>
-    </div>
-</div>
 
 
 {% endblock %}
