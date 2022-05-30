@@ -118,7 +118,7 @@ def Signup(request):
         confirm_password = request.POST['password2']
 
         if password != confirm_password:
-            return redirect('/register')
+            return redirect('/signup')
 
         user = User.objects.create_user(username, email, password)
         user.first_name = first_name
